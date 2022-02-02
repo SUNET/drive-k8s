@@ -14,11 +14,11 @@ spec:
         number: 8443
   tls:
     - hosts:
-        - argocd.drive.test.sunet.se 
+        - traefik.drive.test.sunet.se 
       secretName: tls-secret
   
   rules:
-  - host: argocd.drive.test.sunet.se
+  - host: traefik.drive.test.sunet.se
     http:
       paths:
       - path: /
