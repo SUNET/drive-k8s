@@ -4,14 +4,19 @@ metadata:
   name: hello-ingress
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.entrypoints: web
-    traefik.ingress.kubernetes.io/router.tls: "false"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   defaultBackend:
     service:
       name: hello-node
       port:
-        number: 8080
+        number: 8443
+  tls:
+    - hosts:
+        - argocd.drive.test.sunet.se 
+      secretName: tls-secret
+  
   rules:
   - host: argocd.drive.test.sunet.se
     http:
