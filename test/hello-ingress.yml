@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.tls: "false"
+spec:
+  defaultBackend:
+    service:
+      name: hello-node
+      port:
+        number: 8080
+  rules:
+  - host: argocd.drive.test.sunet.se
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend: 
+          service:
+            name: hello-node
+            port:
+              number: 8080
