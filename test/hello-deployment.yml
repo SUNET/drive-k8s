@@ -1,0 +1,26 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hello-node
+  namespace: hello
+  creationTimestamp:
+  labels:
+    app: hello-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-node
+  template:
+    metadata:
+      creationTimestamp:
+      labels:
+        app: hello-node
+    spec:
+      containers:
+      - name: echoserver
+        image: k8s.gcr.io/echoserver:1.4
+        resources: {}
+  strategy: {}
+status: {}
