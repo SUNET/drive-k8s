@@ -41,6 +41,8 @@ spec:
               secretKeyRef:
                 name: nc-secret
                 key: "nc_admin_password"
+          - name: OBJECTSTORE_S3_REGION
+            value: "us-east-1"
           - name: OBJECTSTORE_S3_HOST
             value: "s3.sto4.safedc.net"
           - name: OBJECTSTORE_S3_BUCKET
