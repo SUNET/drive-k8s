@@ -22,7 +22,7 @@ spec:
         image: nextcloud 
         env:
           - name: MYSQL_DATABASE
-            value: "nextcloud_kano"
+            value: "kano_nextcloud"
           - name: MYSQL_USER
             value: "kano"
           - name: MYSQL_HOST
