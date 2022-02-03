@@ -1,0 +1,26 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: health-node
+  namespace: health
+  creationTimestamp:
+  labels:
+    app: health-node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: health-node
+  template:
+    metadata:
+      creationTimestamp:
+      labels:
+        app: health-node
+    spec:
+      containers:
+      - name: echoserver
+        image: k8s.gcr.io/echoserver:1.4
+        resources: {}
+  strategy: {}
+status: {}
