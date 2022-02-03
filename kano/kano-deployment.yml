@@ -31,7 +31,7 @@ spec:
           - name: MYSQL_USER
             value: kano
           - name: MYSQL_HOST
-            value: multinode_db
+            value: multinode-db
           - name: MYSQL_PASSWORD
             valueFrom:
               secretKeyRef:

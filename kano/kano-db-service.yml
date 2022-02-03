@@ -1,7 +1,11 @@
-kind: Service
+---
 apiVersion: v1
+kind: Service
 metadata:
-name: multinode_db
+  name: multinode-db
+  namespace: kano
 spec:
-type: ExternalName
-externalName: multinode-db1.drive.test.sunet.se
+  type: ExternalName
+  externalName: multinode-db1.drive.test.sunet.se
+  ports:
+    - port: 3000
