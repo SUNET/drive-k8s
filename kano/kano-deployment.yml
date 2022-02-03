@@ -34,6 +34,13 @@ spec:
                 key: "db_password"
           - name: NEXTCLOUD_TRUSTED_DOMAINS
             value: "kano.drive.test.sunet.se"
+          - name: NEXTCLOUD_ADMIN_USER
+            value: _kano
+          - name: NEXTCLOUD_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: nc-secret
+                key: "nc_admin_password"
           - name: OBJECTSTORE_S3_HOST
             value: "sto4"
           - name: OBJECTSTORE_S3_BUCKET
