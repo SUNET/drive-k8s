@@ -20,48 +20,48 @@ spec:
       containers:
       - name: nextcloud 
         image: nextcloud 
-        resources: {}
         env:
           - name: MYSQL_DATABASE
-            value: nextcloud_kano
+            value: "nextcloud_kano"
           - name: MYSQL_USER
-            value: kano
+            value: "kano"
           - name: MYSQL_HOST
-            value: multinode-db
+            value: "multinode-db"
           - name: MYSQL_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: db-secret
-                key: db_password
+                key: "db_password"
           - name: NEXTCLOUD_ADMIN_USER
             value: admin
           - name: NEXTCLOUD_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: nc-password
-                key: nc_admin_password
+                name: nc-secret
+                key: "nc_admin_password"
           - name: NEXTCLOUD_TRUSTED_DOMAINS
-            value: kano.drive.test.sunet.se
+            value: "kano.drive.test.sunet.se"
           - name: OBJECTSTORE_S3_HOST
-            value: s3.sto4.safedc.net
+            value: "s3.sto4.safedc.net"
           - name: OBJECTSTORE_S3_BUCKET
-            value: primary-kano-drive-test.sunet.se
+            value: "primary-kano-drive-test.sunet.se"
           - name: OBJECTSTORE_S3_KEY
             valueFrom:
               secretKeyRef:
                 name: s3-secret
-                key: s3_key
+                key: "s3_key"
           - name: OBJECTSTORE_S3_SECRET
             valueFrom:
               secretKeyRef:
                 name: s3-secret
-                key: s3_secret
+                key: "s3_secret"
           - name: OBJECTSTORE_S3_USEPATH_STYLE
-            value: true
+            value: "true"
           - name: OBJECTSTORE_S3_AUTOCREATE
-            value: true
+            value: "true"
           - name: REDIS_HOST
-            value: redis
+            value: "redis"
+        resources: {}
       - name: redis
         image: redis:alpine 
         resources: {}
