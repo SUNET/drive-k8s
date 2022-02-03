@@ -7,7 +7,7 @@ metadata:
   labels:
     app: kano-node
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: kano-node
@@ -19,11 +19,44 @@ spec:
     spec:
       containers:
       - name: nextcloud 
-        image: docker.sunet.se/drive/nextcloud-custom:21.0.6.3-10 
+        image: nextcloud 
         resources: {}
-      - name: proxysql 
-        image: docker.sunet.se/drive/proxysql:latest 
-        resources: {}
+        env:
+          - name: NEXTCLOUD_ADMIN_USER
+            value: admin
+          - name: NEXTCLOUD_TRUSTED_DOMAINS
+            value: kano.drive.test.sunet.se
+          - name: MYSQL_DATABASE
+            value: nextcloud_kano
+          - name: MYSQL_USER
+            value: kano
+          - name: MYSQL_HOST
+            value: multinode_db
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: db_password
+          - name: REDIS_HOST
+            value: redis
+          - name: OBJECTSTORE_S3_HOST
+            value: s3.sto4.safedc.net
+          - name: OBJECTSTORE_S3_BUCKET
+            value: primary-kano-drive-test.sunet.se
+          - name: OBJECTSTORE_S3_KEY
+            valueFrom:
+              secretKeyRef:
+                name: s3-secret
+                key: s3_key
+          - name: OBJECTSTORE_S3_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: s3-secret
+                key: s3_secret
+          - name: OBJECTSTORE_S3_USEPATH_STYLE
+            value: true
+          - name: OBJECTSTORE_S3_AUTOCREATE
+            value: true
       - name: redis
         image: redis:alpine 
         resources: {}
