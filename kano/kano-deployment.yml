@@ -32,13 +32,6 @@ spec:
               secretKeyRef:
                 name: db-secret
                 key: "db_password"
-          - name: NEXTCLOUD_ADMIN_USER
-            value: _kano
-          - name: NEXTCLOUD_ADMIN_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: nc-secret
-                key: "nc_admin_password"
           - name: NEXTCLOUD_TRUSTED_DOMAINS
             value: "kano.drive.test.sunet.se"
           - name: OBJECTSTORE_S3_HOST
