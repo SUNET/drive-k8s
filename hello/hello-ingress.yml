@@ -16,11 +16,11 @@ spec:
         number: 8443
   tls:
     - hosts:
-        - kano.drive.test.sunet.se 
+        - hello.drive.test.sunet.se 
       secretName: tls-secret
   
   rules:
-  - host: kano.drive.test.sunet.se
+  - host: hello.drive.test.sunet.se
     http:
       paths:
       - path: /
