@@ -42,7 +42,7 @@ spec:
           - name: NEXTCLOUD_TRUSTED_DOMAINS
             value: "kano.drive.test.sunet.se"
           - name: OBJECTSTORE_S3_HOST
-            value: "s3.sto4.safedc.net"
+            value: "sto4"
           - name: OBJECTSTORE_S3_BUCKET
             value: "primary-kano-drive-test.sunet.se"
           - name: OBJECTSTORE_S3_KEY

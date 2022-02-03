@@ -8,4 +8,4 @@ spec:
   type: ExternalName
   externalName: multinode-db1.drive.test.sunet.se
   ports:
-    - port: 3000
+    - port: 3306
