@@ -16,11 +16,11 @@ spec:
         number: 8443
   tls:
     - hosts:
-        - traefik.drive.test.sunet.se 
+        - kano.drive.test.sunet.se 
       secretName: tls-secret
   
   rules:
-  - host: traefik.drive.test.sunet.se
+  - host: kano.drive.test.sunet.se
     http:
       paths:
       - path: /
