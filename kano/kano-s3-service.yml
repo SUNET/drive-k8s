@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sto4
+  namespace: kano
+spec:
+  type: ExternalName
+  externalName: s3.sto4.safedc.net
+  ports:
+    - port: 443
