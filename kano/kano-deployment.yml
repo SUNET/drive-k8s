@@ -1,0 +1,31 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kano-node
+  namespace: kano
+  labels:
+    app: kano-node
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kano-node
+  template:
+    metadata:
+      creationTimestamp:
+      labels:
+        app: kano-node
+    spec:
+      containers:
+      - name: nextcloud 
+        image: docker.sunet.se/drive/nextcloud-custom:21.0.6.3-10 
+        resources: {}
+      - name: proxysql 
+        image: docker.sunet.se/drive/proxysql:latest 
+        resources: {}
+      - name: redis
+        image: redis:alpine 
+        resources: {}
+  strategy: {}
+status: {}
