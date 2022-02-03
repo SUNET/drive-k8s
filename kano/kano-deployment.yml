@@ -59,6 +59,8 @@ spec:
             value: "true"
           - name: OBJECTSTORE_S3_AUTOCREATE
             value: "true"
+          - name: OBJECTSTORE_S3_SSL
+            value: "true"
           - name: REDIS_HOST
             value: "redis"
         resources: {}
