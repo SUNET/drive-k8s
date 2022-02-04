@@ -5,13 +5,13 @@ items:
   metadata:
     labels:
       app: argocd-server
-    name: argocd-server-service
+    name: argocd-server
     namespace: argocd
   spec:
     ports:
-    - port: 8080
+    - port: 443
       protocol: TCP
-      targetPort: 8080
+      targetPort: 443
     selector:
       app: argocd-server
     sessionAffinity: None

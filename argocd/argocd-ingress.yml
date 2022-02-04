@@ -10,7 +10,7 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: argocd-server-service
+      name: argocd-server
       port:
         number: 8443
   tls:
@@ -26,6 +26,6 @@ spec:
         pathType: Prefix
         backend: 
           service:
-            name: argocd-server-service
+            name: argocd-server
             port:
-              number: 8080
+              number: 80
