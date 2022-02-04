@@ -5,7 +5,7 @@ items:
   metadata:
     labels:
       app: argocd-server
-    name: argocd-server
+    name: argocd-server-service
     namespace: argocd
   spec:
     ports:
