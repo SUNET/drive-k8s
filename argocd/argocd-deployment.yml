@@ -2873,6 +2873,7 @@ metadata:
     app.kubernetes.io/name: argocd-cmd-params-cm
     app.kubernetes.io/part-of: argocd
   name: argocd-cmd-params-cm
+  namespace: argocd
 ---
 apiVersion: v1
 kind: ConfigMap
