@@ -17,9 +17,17 @@ spec:
       labels:
         app: kano-node
     spec:
+      volumes:
+        - name: server-storage
+          persistentVolumeClaim:
+            claimName: nextcloud-shared-storage-claim
       containers:
       - name: nextcloud 
         image: nextcloud 
+        volumeMounts:
+          - name: server-storage
+            mountPath: /var/www/html
+            subPath: server-data
         env:
           - name: MYSQL_DATABASE
             value: "kano_nextcloud"
@@ -71,3 +79,15 @@ spec:
         resources: {}
   strategy: {}
 status: {}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nextcloud-shared-storage-claim
+spec:
+  storageClassName: openebs-jiva-default
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256
