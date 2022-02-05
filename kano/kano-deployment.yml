@@ -86,7 +86,7 @@ metadata:
   name: nextcloud-shared-storage-claim
   namespace: kano
 spec:
-  storageClassName: openebs-jiva-default
+  storageClassName: openebs-jiva-3repl
   accessModes:
     - ReadWriteOnce
   resources:
