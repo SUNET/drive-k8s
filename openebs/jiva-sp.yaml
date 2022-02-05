@@ -1,0 +1,7 @@
+apiVersion: openebs.io/v1alpha1
+kind: StoragePool
+metadata:
+    name: jiva-pool 
+    type: hostdir
+spec:
+    path: "/mnt"  
