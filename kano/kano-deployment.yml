@@ -84,6 +84,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: nextcloud-shared-storage-claim
+  namespace: kano
 spec:
   storageClassName: openebs-jiva-default
   accessModes:
