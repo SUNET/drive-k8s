@@ -33,7 +33,6 @@ spec:
         - name: proxysql-data
           mountPath: /var/lib/proxysql
           subPath: data
-        volumeMounts:
         - name: proxysql-etc
           mountPath: /etc
           subPath: etc
@@ -49,6 +48,9 @@ spec:
         - name: proxysql-config-template
           mountPath: /tmp/proxysql.cnf.template
           subPath: proxysql.cnf
+        - name: proxysql-etc
+          mountPath: /etc
+          subPath: etc
         env:
         - name: ADMIN_PASSWORD
           valueFrom:
