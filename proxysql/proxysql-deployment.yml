@@ -19,31 +19,36 @@ spec:
         app: proxysql
     spec:
       restartPolicy: Always
+      volumes:
+        - name: proxysql-data
+          persistentVolumeClaim:
+            claimName: proxysql-shared-storage-claim
+        - name: proxysql-etc
+          persistentVolumeClaim:
+            claimName: proxysql-etc-storage-claim
       containers:
       - image: proxysql/proxysql:2.3.1
         name: proxysql
         volumeMounts:
-        - name: proxysql-config-template
-          mountPath: /tmp/proxysql.cnf.template
-          subPath: proxysql.cnf
         - name: proxysql-data
           mountPath: /var/lib/proxysql
           subPath: data
+        volumeMounts:
+        - name: proxysql-etc
+          mountPath: /etc
+          subPath: etc
         ports:
         - containerPort: 6033
           name: proxysql-mysql
         - containerPort: 6032
           name: proxysql-admin
-      volumes:
-      - name: proxysql-config-template
-        configMap:
-          name: proxysql-configmap
-          items:
-            - key: "proxysql.cnf"
-              path: "proxysql.cnf"
       initContainers:
       - image: proxysql/proxysql:2.3.1
         name: init-config
+        volumeMounts:
+        - name: proxysql-config-template
+          mountPath: /tmp/proxysql.cnf.template
+          subPath: proxysql.cnf
         env:
         - name: ADMIN_PASSWORD
           valueFrom:
@@ -66,12 +71,40 @@ spec:
               name: proxysql-secret
               key: "proxysql_kano_password"
         command: ["/bin/sh", "-c", "envsubst < '/tmp/proxysql.cnf.template' > '/etc/proxysql.cnf'"]
-  volumeClaimTemplates:
-  - metadata:
-      name: proxysql-data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: openebs-jiva-3repl
-      resources:
-        requests:
-          storage: 2Gi
+      volumes:
+      - name: proxysql-config-template
+        configMap:
+          name: proxysql-configmap
+          items:
+            - key: "proxysql.cnf"
+              path: "proxysql.cnf"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: proxysql-shared-storage-claim
+  namespace: kano
+  annotations:
+    volume.beta.kubernetes.io/storage-class: openebs-jiva-3repl
+spec:
+  storageClassName: openebs-jiva-3repl
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: proxysql-etc-storage-claim
+  namespace: kano
+  annotations:
+    volume.beta.kubernetes.io/storage-class: openebs-jiva-3repl
+spec:
+  storageClassName: openebs-jiva-3repl
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
