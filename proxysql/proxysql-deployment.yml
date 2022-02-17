@@ -83,7 +83,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: proxysql-shared-storage-claim
-  namespace: kano
+  namespace: proxysql
   annotations:
     volume.beta.kubernetes.io/storage-class: openebs-jiva-3repl
 spec:
@@ -98,7 +98,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: proxysql-etc-storage-claim
-  namespace: kano
+  namespace: proxysql
   annotations:
     volume.beta.kubernetes.io/storage-class: openebs-jiva-3repl
 spec:
