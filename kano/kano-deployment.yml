@@ -34,12 +34,14 @@ spec:
           - name: MYSQL_USER
             value: "kano"
           - name: MYSQL_HOST
-            value: "multinode-db"
+            value: "proxysql.proxysql"
           - name: MYSQL_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: db-secret
                 key: "db_password"
+          - name: MYSQL_PORT
+            value: "6033"
           - name: NEXTCLOUD_TRUSTED_DOMAINS
             value: "kano.drive.test.sunet.se"
           - name: NEXTCLOUD_ADMIN_USER
