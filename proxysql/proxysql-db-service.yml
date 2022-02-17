@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: multinode-db1.drive.test.sunet.se
+  name: multinode-db1
   namespace: proxysql
 spec:
   type: ExternalName
@@ -13,7 +13,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: multinode-db2.drive.test.sunet.se
+  name: multinode-db2
   namespace: proxysql
 spec:
   type: ExternalName
@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: multinode-db3.drive.test.sunet.se
+  name: multinode-db3
   namespace: proxysql
 spec:
   type: ExternalName
