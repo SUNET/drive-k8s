@@ -83,9 +83,9 @@ data:
     )
     mysql_servers =
     (
-        { address="multinode-db1.drive.test.sunet.se" , port=3306 , hostgroup=10, max_connections=100 },
-        { address="multinode-db2.drive.test.sunet.se" , port=3306 , hostgroup=20, max_connections=100 },
-        { address="multinode-db3.drive.test.sunet.se" , port=3306 , hostgroup=30, max_connections=100 }
+        { address="multinode-db1" , port=3306 , hostgroup=10, max_connections=100 },
+        { address="multinode-db2" , port=3306 , hostgroup=20, max_connections=100 },
+        { address="multinode-db3" , port=3306 , hostgroup=30, max_connections=100 }
     )
 
     mysql_users =
