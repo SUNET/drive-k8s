@@ -13,19 +13,33 @@ spec:
       app: proxysql
   updateStrategy:
     type: RollingUpdate
+  volumeClaimTemplates:
+  - metadata:
+      name: proxysql-data
+      namespace: proxysql
+    spec:
+      storageClassName: openebs-jiva-3repl
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 2Gi
+  - metadata:
+      name: proxysql-etc
+      namespace: proxysql
+    spec:
+      storageClassName: openebs-jiva-3repl
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 2Gi
   template:
     metadata:
       labels:
         app: proxysql
     spec:
       restartPolicy: Always
-      volumes:
-        - name: proxysql-data
-          persistentVolumeClaim:
-            claimName: proxysql-shared-storage-claim
-        - name: proxysql-etc
-          persistentVolumeClaim:
-            claimName: proxysql-etc-storage-claim
       containers:
       - image: proxysql/proxysql:2.3.1
         name: proxysql
@@ -74,39 +88,9 @@ spec:
               key: "proxysql_kano_password"
         command: ["/bin/sh", "-c", "envsubst < '/tmp/proxysql.cnf.template' > '/etc/proxysql.cnf'"]
       volumes:
-      - name: proxysql-config-template
-        configMap:
-          name: proxysql-configmap
-          items:
-            - key: "proxysql.cnf"
-              path: "proxysql.cnf"
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: proxysql-shared-storage-claim
-  namespace: proxysql
-  annotations:
-    volume.beta.kubernetes.io/storage-class: openebs-jiva-3repl
-spec:
-  storageClassName: openebs-jiva-3repl
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: proxysql-etc-storage-claim
-  namespace: proxysql
-  annotations:
-    volume.beta.kubernetes.io/storage-class: openebs-jiva-3repl
-spec:
-  storageClassName: openebs-jiva-3repl
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
+        - name: proxysql-config-template
+          configMap:
+            name: proxysql-configmap
+            items:
+              - key: "proxysql.cnf"
+                path: "proxysql.cnf"
