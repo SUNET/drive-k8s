@@ -56,7 +56,7 @@ spec:
         - containerPort: 6032
           name: proxysql-admin
       initContainers:
-      - image: proxysql/proxysql:2.3.1
+      - image: bhgedigital/envsubst
         name: init-config
         volumeMounts:
         - name: proxysql-config-template
