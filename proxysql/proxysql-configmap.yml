@@ -29,7 +29,7 @@ data:
         stacksize=1048576
         server_version="8.0.23"
         connect_timeout_server=3000
-        monitor_username="monitor"
+        monitor_username="proxysql"
         monitor_password="${MONITOR_PASSWORD}"
         monitor_history=600000
         monitor_connect_interval=60000
