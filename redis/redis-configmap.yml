@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: redis
+  name: redis-configmap
   namespace: redis
 data:
   master.conf: |

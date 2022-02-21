@@ -29,6 +29,15 @@ spec:
         app: redis
     spec:
       restartPolicy: Always
+      volumes:
+        - name: redis-config
+          configMap:
+            name: redis-configmap
+            items:
+              - key: "master.conf"
+                path: "master.conf"
+              - key: "slave.conf"
+                path: "slave.conf"
       containers:
       - name: redis
         image: redis:4.0.9
@@ -66,5 +75,5 @@ spec:
         - name: conf
           mountPath: /etc
           subPath: redis.conf
-        - name: config-map
+        - name: redis-config
           mountPath: /mnt/config-map
