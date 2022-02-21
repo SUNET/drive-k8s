@@ -12,6 +12,17 @@ spec:
   selector:
     matchLabels:
       app: redis
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-data
+      namespace: redis
+    spec:
+      storageClassName: openebs-jiva-3repl
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 2Gi
   template:
     metadata:
       labels:
