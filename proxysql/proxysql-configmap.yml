@@ -9,11 +9,11 @@ data:
 
     admin_variables=
     {
-        admin_credentials="admin:${ADMIN_PASSWORD};cluster:${CLUSTER_PASSWORD}"
+        admin_credentials="admin:{{ADMIN_PASSWORD}};cluster:{{CLUSTER_PASSWORD}}"
         mysql_ifaces="0.0.0.0:6032"
         refresh_interval=2000
         cluster_username="cluster"
-        cluster_password="${CLUSTER_PASSWORD}"
+        cluster_password="{{CLUSTER_PASSWORD}}"
     }
 
     mysql_variables=
@@ -30,7 +30,7 @@ data:
         server_version="8.0.23"
         connect_timeout_server=3000
         monitor_username="proxysql"
-        monitor_password="${MONITOR_PASSWORD}"
+        monitor_password="{{MONITOR_PASSWORD}}"
         monitor_history=600000
         monitor_connect_interval=60000
         monitor_ping_interval=10000
@@ -90,7 +90,7 @@ data:
 
     mysql_users =
     (
-        { username = "kano", password = "${KANO_PASSWORD}", default_hostgroup = 10, active = 1 }
+        { username = "kano", password = "{{KANO_PASSWORD}}", default_hostgroup = 10, active = 1 }
     )
 
     proxysql_servers =

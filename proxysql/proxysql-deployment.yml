@@ -56,7 +56,7 @@ spec:
         - containerPort: 6032
           name: proxysql-admin
       initContainers:
-      - image: bhgedigital/envsubst
+      - image: docker.sunet.se/sunet/docker-jinja:latest
         name: init-config
         volumeMounts:
         - name: proxysql-config-template
@@ -86,7 +86,7 @@ spec:
             secretKeyRef:
               name: proxysql-secret
               key: "proxysql_kano_password"
-        command: ["/bin/sh", "-c", "envsubst < '/tmp/proxysql.cnf.template' > '/etc/proxysql.cnf'"]
+        command: ["/bin/sh", "-c", "/usr/bin/j2 -f env -o /etc/proxysql.cnf /tmp/proxysql.cnf.template"]
       volumes:
         - name: proxysql-config-template
           configMap:
