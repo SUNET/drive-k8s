@@ -52,7 +52,7 @@ spec:
         volumeMounts:
         - name: redis-data
           mountPath: /data
-        - name: conf
+        - name: redis-data
           mountPath: /etc/
       initContainers:
       - name: init-redis
@@ -72,7 +72,7 @@ spec:
             cp /mnt/config-map/slave.conf /etc/redis.conf
           fi
         volumeMounts:
-        - name: conf
+        - name: redis-data
           mountPath: /etc
           subPath: redis.conf
         - name: redis-config
