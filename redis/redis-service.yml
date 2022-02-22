@@ -8,14 +8,12 @@ metadata:
   namespace: redis
 spec:
   ports:
-  - name: redis-port
+  - name: redis
     nodePort: 30379
     port: 6379
-    protocol: TCP
-    targetPort: 6379
+    targetPort: redis
   selector:
     app: redis
-    role: master
   type: NodePort
 ---
 apiVersion: v1
@@ -29,6 +27,6 @@ spec:
   clusterIP: None
   ports:
   - port: 6379
-    name: redis-port
+    name: redis
   selector:
     app: redis
