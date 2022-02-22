@@ -14,6 +14,7 @@ spec:
     targetPort: redis
   selector:
     app: redis
+    statefulset.kubernetes.io/pod-name: redis-node-0
   type: NodePort
 ---
 apiVersion: v1
