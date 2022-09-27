@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     chart: sciebords
-    repoURL: https://github.com/Sciebo-RDS/Sciebo-RDS/tree/develop/charts
+    repoURL: https://research-data-services.org/charts
     targetRevision: v0.1.9
     helm:
       releaseName: sciebords
