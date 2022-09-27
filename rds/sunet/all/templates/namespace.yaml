@@ -1,0 +1,8 @@
+{{- if .Values.namespace.create -}}
+# Create Namespace with the following name
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.global.namespace.name | default .Release.Namespace  }}
+  namespace: {{ .Values.global.namespace.name | default .Release.Namespace  }}
+{{- end -}}
