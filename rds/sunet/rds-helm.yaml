@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sunetrds
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: sciebords
+    repoURL: https://github.com/Sciebo-RDS/Sciebo-RDS/tree/develop/charts
+    targetRevision: v0.1.9
+    helm:
+      releaseName: sciebords
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: sunetrds
