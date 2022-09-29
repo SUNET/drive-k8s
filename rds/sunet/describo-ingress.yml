@@ -1,0 +1,32 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sunetdescribo-ingress
+  namespace: sunetrds
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  defaultBackend:
+    service:
+      name: layer0-describo
+      port:
+        number: 80
+  tls:
+    - hosts:
+        - describo.sunet.drive.test.sunet.se 
+      secretName: tls-secret
+  
+  rules:
+  - host: describo.sunet.drive.test.sunet.se
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend: 
+          service:
+            name: layer0-describo
+            port:
+              number: 80
