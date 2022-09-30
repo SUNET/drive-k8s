@@ -1,3 +1,4 @@
+verify_ssl: "False"
 global:
   image:
     tag: v0.1.9 # set the same tag here as the same you used before for Owncloud
@@ -12,10 +13,10 @@ global:
   # Domains you want to use as input, currently only owncloud supported,
   # this enables to use multiple owncloud instances with a single sciebo RDS
   domains:
-    - name: sunet.drive.test.sunet.se # name needs to be exact the same as the second part after last @ in the cloudId
-      ADDRESS: https://sunet.drive.test.sunet.se # this has to be the exact owncloud domain 
-      OAUTH_CLIENT_ID: ABC # given by the oauth plugin inside of owncloud
-      OAUTH_CLIENT_SECRET: XYZ # given by the oauth plugin inside of owncloud
+    - name: sunet.drive.sunet.se # name needs to be exact the same as the second part after last @ in the cloudId
+      ADDRESS: https://sunet.drive.sunet.se # this has to be the exact owncloud domain 
+      OAUTH_CLIENT_ID: some_id
+      OAUTH_CLIENT_SECRET: some_secret
       SUPPORT_EMAIL: drive@sunet.se # a mail address you want to show to the users in multiple places inside of the ui
       MANUAL_URL: usermanual.side.com # an url to a manual you want to show to the users in ui
 layer0-describo: # describo`s specific options
@@ -37,6 +38,8 @@ redis:
 layer0-web: # sciebo rds UI specific options
   environment: # env vars given into the container
     SECRET_KEY: 1234 # the password, which will be used to encrypt all user data
+layer1-port-owncloud:
+  enabled: true
 layer1-port-zenodo: # zenodo`s specific options
   enabled: false # here you could disable it, but who would like to do it?
   environment: # needs to be adjusted to correct values
@@ -44,3 +47,7 @@ layer1-port-zenodo: # zenodo`s specific options
     # ADDRESS: https://zenodo.org # the main instance of zenodo.
     OAUTH_CLIENT_ID: ABC # given by the OAUTH process of the used zenodo instance from above.
     OAUTH_CLIENT_SECRET: XYZ # given by the OAUTH process of the used zenodo instance from above.
+proxy:
+  http_proxy: ""
+  https_proxy: ""
+  no_proxy: "*"

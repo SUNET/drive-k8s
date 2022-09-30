@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sunet-drive
+  namespace: sunetrds
+spec:
+  type: ExternalName
+  externalName: sunet.drive.sunet.se
+  ports:
+    - port: 443

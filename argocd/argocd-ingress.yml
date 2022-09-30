@@ -15,11 +15,11 @@ spec:
         number: 8443
   tls:
     - hosts:
-        - argocd.drive.test.sunet.se 
+        - argocd.drive.sunet.se 
       secretName: tls-secret
   
   rules:
-  - host: argocd.drive.test.sunet.se
+  - host: argocd.drive.sunet.se
     http:
       paths:
       - path: /

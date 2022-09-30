@@ -16,11 +16,11 @@ spec:
         number: 8443
   tls:
     - hosts:
-        - kube.drive.test.sunet.se 
+        - kube.drive.sunet.se 
       secretName: tls-secret
   
   rules:
-  - host: kube.drive.test.sunet.se
+  - host: kube.drive.sunet.se
     http:
       paths:
       - path: /
