@@ -1,0 +1,32 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kano-ingress
+  namespace: kano
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  defaultBackend:
+    service:
+      name: kano-node
+      port:
+        number: 8443
+  tls:
+    - hosts:
+        - kano.drive.sunet.se 
+      secretName: tls-secret
+  
+  rules:
+  - host: kano.drive.sunet.se
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend: 
+          service:
+            name: kano-node
+            port:
+              number: 80
