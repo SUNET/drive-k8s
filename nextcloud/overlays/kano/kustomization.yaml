@@ -4,5 +4,6 @@ bases:
 - ../../base
 patchesStrategicMerge:
 - ingress.yaml
+- deployment.yaml
 
 

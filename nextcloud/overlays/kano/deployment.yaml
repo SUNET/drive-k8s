@@ -1,0 +1,20 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kano-node
+  namespace: kano
+  labels:
+    app: kano-node
+spec:
+  template:
+    spec:
+      containers:
+      - name: nextcloud 
+        env:
+          - name: MYSQL_HOST
+            value: "multinode-db"
+          - name: MYSQL_PORT
+            value: "3306"
+          - name: NEXTCLOUD_TRUSTED_DOMAINS
+            value: "kano.drive.sunet.se"
