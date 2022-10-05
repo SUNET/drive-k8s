@@ -1,26 +1,24 @@
 verify_ssl: "False"
 global:
   image:
-    tag: v0.1.9 # set the same tag here as the same you used before for Owncloud
-  namespace: # kubernetes separates applications in namespaces
-    create: false # creates a namespace on its own
-    name: sunetrds # the name of the namespace, which will be used for sciebo RDS and / or created.
-  describo: # all needed informations for describo
-    api_secret: IAMSECRET # the api password, which is needed for all requests against the api
-    domain: describo.sunet.drive.test.sunet.se # the domain you created for describo ui
+    tag: v0.1.9
+  namespace:
+    create: false
+    name: sunetrds
+  describo:
+    api_secret: IAMSECRET
+    domain: describo-sunet.drive.sunet.se
   rds:
-    domain: rds.sunet.drive.test.sunet.se # the domain you created for the sciebo rds ui
-  # Domains you want to use as input, currently only owncloud supported,
-  # this enables to use multiple owncloud instances with a single sciebo RDS
+    domain: rds-sunet.drive.sunet.se
   domains:
-    - name: sunet.drive.sunet.se # name needs to be exact the same as the second part after last @ in the cloudId
-      ADDRESS: https://sunet.drive.sunet.se # this has to be the exact owncloud domain 
+    - name: sunet.drive.sunet.se
+      ADDRESS: https://sunet.drive.sunet.se
       OAUTH_CLIENT_ID: some_id
       OAUTH_CLIENT_SECRET: some_secret
-      SUPPORT_EMAIL: drive@sunet.se # a mail address you want to show to the users in multiple places inside of the ui
-      MANUAL_URL: usermanual.side.com # an url to a manual you want to show to the users in ui
-layer0-describo: # describo`s specific options
-  postgresql: # starts its own postgresql database.
+      SUPPORT_EMAIL: drive@sunet.se
+      MANUAL_URL: usermanual.side.com
+layer0-describo:
+  postgresql:
     postgresqlDatabase: describo
     postgresqlUsername: admin
     postgresqlPassword: admin
@@ -35,18 +33,17 @@ redis:
     enabled: false
   volumePermissions:
     enabled: true
-layer0-web: # sciebo rds UI specific options
-  environment: # env vars given into the container
-    SECRET_KEY: 1234 # the password, which will be used to encrypt all user data
+layer0-web:
+  environment:
+    SECRET_KEY: 1234
 layer1-port-owncloud:
   enabled: true
-layer1-port-zenodo: # zenodo`s specific options
-  enabled: false # here you could disable it, but who would like to do it?
-  environment: # needs to be adjusted to correct values
-    ADDRESS: https://sandbox.zenodo.org # the testing instance
-    # ADDRESS: https://zenodo.org # the main instance of zenodo.
-    OAUTH_CLIENT_ID: ABC # given by the OAUTH process of the used zenodo instance from above.
-    OAUTH_CLIENT_SECRET: XYZ # given by the OAUTH process of the used zenodo instance from above.
+layer1-port-zenodo:
+  enabled: false
+  environment:
+    ADDRESS: https://sandbox.zenodo.org
+    OAUTH_CLIENT_ID: ABC
+    OAUTH_CLIENT_SECRET: XYZ
 proxy:
   http_proxy: ""
   https_proxy: ""
