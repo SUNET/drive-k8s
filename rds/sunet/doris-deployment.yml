@@ -1,0 +1,53 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: doris-connector
+  namespace: sunetrds
+  labels:
+    app: doris-connector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: doris-connector
+  template:
+    metadata:
+      creationTimestamp:
+      labels:
+        app: doris-connector
+    spec:
+      containers:
+      - name: doris
+        image: docker.sunet.se/rds/doris-rds:ci-RDS-Connectors-13
+        env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Development
+          - name: ASPNETCORE_URLS
+            value: http://+:80
+          - name: Domain
+            value: sunet.se
+          - name: ScieboRds__TokenStorageUrl
+            value: http://layer3-token-storage 
+          - name: S3__Url
+            value: dummy
+          - name: ManifestIndex__Url
+            value: https://snd-storage-metadata-index-test-snd-dev.apps.k8s.gu.se
+          - name: ManifestIndex__ApiKey
+            valueFrom:
+              secretKeyRef:
+                name: doris-api-key
+                key: "api-key"
+          - name: S3__AccessKey
+            valueFrom:
+              secretKeyRef:
+                name: doris-s3-key
+                key: "s3-key"
+          - name: S3__SecretKey
+            valueFrom:
+              secretKeyRef:
+                name: doris-s3-secret
+                key: "s3-secret"
+        resources: {}
+  strategy: {}
+status: {}
