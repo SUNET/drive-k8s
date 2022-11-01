@@ -16,11 +16,11 @@ spec:
         number: 80
   tls:
     - hosts:
-        - describo.sunet.drive.test.sunet.se 
+        - describo-sunet.drive.test.sunet.se 
       secretName: tls-secret
   
   rules:
-  - host: describo.sunet.drive.test.sunet.se
+  - host: describo-sunet.drive.test.sunet.se
     http:
       paths:
       - path: /

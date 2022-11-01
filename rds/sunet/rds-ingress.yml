@@ -16,11 +16,11 @@ spec:
         number: 80
   tls:
     - hosts:
-        - rds.sunet.drive.test.sunet.se 
+        - rds-sunet.drive.test.sunet.se 
       secretName: tls-secret
   
   rules:
-  - host: rds.sunet.drive.test.sunet.se
+  - host: rds-sunet.drive.test.sunet.se
     http:
       paths:
       - path: /
