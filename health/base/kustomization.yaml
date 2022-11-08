@@ -1,0 +1,5 @@
+resources:
+  - health-deployment.yml  
+  - health-ingress.yml
+  - health-namespace.yml
+  - health-service.yml
