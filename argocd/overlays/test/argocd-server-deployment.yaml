@@ -18,3 +18,5 @@ spec:
         command:
         - argocd-server
         - --insecure
+        - --redis
+        - "argocd-redis-ha-haproxy:6379"
