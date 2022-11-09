@@ -2,20 +2,20 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: doris-connector
+  name: layer1-port-doris
   namespace: sunetrds
   labels:
-    app: doris-connector
+    app: layer1-port-doris
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: doris-connector
+      app: layer1-port-doris
   template:
     metadata:
       creationTimestamp:
       labels:
-        app: doris-connector
+        app: layer1-port-doris
     spec:
       containers:
       - name: doris

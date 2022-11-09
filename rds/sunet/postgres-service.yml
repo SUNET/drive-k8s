@@ -5,16 +5,16 @@ items:
   kind: Service
   metadata:
     labels:
-      app: layer1-port-doris
-    name: layer1-port-doris
+      app: postgresql
+    name: postgresql
     namespace: sunetrds
   spec:
     ports:
-    - port: 80
+    - port: 5432
       protocol: TCP
-      targetPort: 80
+      targetPort: 5432
     selector:
-      app: layer1-port-doris
+      app: postgres
     sessionAffinity: None
     type: ClusterIP
   status:
