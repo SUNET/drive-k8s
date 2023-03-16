@@ -3,6 +3,4 @@ kind: Kustomization
 bases:
 - ../../base
 patchesStrategicMerge:
-- argocd-server-deployment.yaml
-- argocd-cm.yaml
-- argocd-ingress.yaml
+- health-ingress.yml 
