@@ -1,0 +1,5 @@
+resources:
+  - jupyterhub-deployment.yml  
+  - jupyterhub-ingress.yml
+  - jupyterhub-namespace.yml
+  - jupyterhub-service.yml

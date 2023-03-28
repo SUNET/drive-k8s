@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  DESCRIBO_API_ENDPOINT: http://layer0-describo/api/session/application
+  DESCRIBO_API_SECRET: IAMSECRET
+  REDIS_CHANNEL: TokenStorage_Refresh_Token
+  REDIS_HELPER_HOST: redis-helper
+  REDIS_HELPER_PORT: '6379'
+kind: ConfigMap
+metadata:
+  labels: {}
+  name: describohelperconfig

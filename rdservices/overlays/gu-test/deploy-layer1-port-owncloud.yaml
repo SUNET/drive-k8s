@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: research-data-services.org
+    app.kubernetes.io/instance: customerrds
+    app.kubernetes.io/name: layer1-port-owncloud
+    app.kubernetes.io/part-of: connector
+    app.kubernetes.io/version: '1.0'
+    research-data-services.org/layer: layer1
+  name: layer1-port-owncloud
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: research-data-services.org
+      app.kubernetes.io/instance: customerrds
+      app.kubernetes.io/name: layer1-port-owncloud
+      app.kubernetes.io/part-of: connector
+      app.kubernetes.io/version: '1.0'
+      research-data-services.org/layer: layer1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: research-data-services.org
+        app.kubernetes.io/instance: customerrds
+        app.kubernetes.io/name: layer1-port-owncloud
+        app.kubernetes.io/part-of: connector
+        app.kubernetes.io/version: '1.0'
+        research-data-services.org/layer: layer1
+    spec:
+      containers:
+        - env:
+            - name:   OWNCLOUD_INSTALLATION_URL
+              value: https://gu.drive.test.sunet.se
+            - name:   OWNCLOUD_OAUTH_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: owncloud_oauth_client_id
+                  key: "client_id"
+            - name:   OWNCLOUD_OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: owncloud_oauth_client_secret
+                  key: "client_secret"
+            - name:   SERVICENAME
+              value: gu-drive-test-sunet-se
+          envFrom:
+            - configMapRef:
+                name: mservice
+            - configMapRef:
+                name: proxy
+            - configMapRef:
+                name: globalenvvar

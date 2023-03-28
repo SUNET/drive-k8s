@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  IGNORE_PROJECTS: 'True'
+kind: ConfigMap
+metadata:
+  labels: {}
+  name: serviceportconfig

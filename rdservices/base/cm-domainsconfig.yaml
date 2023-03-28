@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  domains.json: '[{"ADDRESS":"https://sunet.drive.test.sunet.se","MANUAL_URL":"www.sunet.se/services/molnbaserade-tjanster/sunet-drive","OAUTH_CLIENT_ID":"DW8GyYz5zYosLGc6paQaA3zaSWxJqEkaejeU2gj5AGZEhb7T9HxlQPZ1BlIF1Zb3","OAUTH_CLIENT_SECRET":"7vOQxWU9unJbDOPa0Z2lGfiSGX8Gbd2eOn8Mq1rr9rPHnTQeISzEO8m97gchpUiU","SUPPORT_EMAIL":"drive@sunet.se","name":"sunet.drive.test.sunet.se"}]'
+kind: ConfigMap
+metadata:
+  labels: {}
+  name: domainsconfig

@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: research-data-services.org
+    app.kubernetes.io/instance: customerrds
+    app.kubernetes.io/name: layer0-web
+    app.kubernetes.io/part-of: rds-ingress
+    app.kubernetes.io/version: '1.0'
+    research-data-services.org/layer: layer0
+  name: layer0-web
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: research-data-services.org
+      app.kubernetes.io/instance: customerrds
+      app.kubernetes.io/name: layer0-web
+      app.kubernetes.io/part-of: rds-ingress
+      app.kubernetes.io/version: '1.0'
+      research-data-services.org/layer: layer0
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: '2022-11-08T13:33:21Z'
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: research-data-services.org
+        app.kubernetes.io/instance: customerrds
+        app.kubernetes.io/name: layer0-web
+        app.kubernetes.io/part-of: rds-ingress
+        app.kubernetes.io/version: '1.0'
+        research-data-services.org/layer: layer0
+    spec:
+      containers:
+        - env:
+            - name: DESCRIBO_API_ENDPOINT
+              value: http://layer0-describo/api/session/application
+            - name: DESCRIBO_API_SECRET
+              value: IAMSECRET
+            - name: EMBED_MODE
+              value: 'true'
+            - name: FLASK_ORIGINS 
+              value: '["http://localhost:8080","http://localhost:8085","http://localhost:8000","http://localhost:9100","https://rds-sunet.drive.test.sunet.se","http://rds-sunet.drive.test.sunet.se"]'
+            - name: PROMETHEUS_MULTIPROC_DIR
+              value: /tmp
+            - name: REDIS_HELPER_HOST
+              value: redis-helper
+            - name: REDIS_HELPER_PORT
+              value: '6379'
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: '6379'
+            - name: SECRET_KEY
+              value: '1234'
+            - name: SOCKETIO_HOST
+              value: https://rds-sunet.drive.test.sunet.se
+            - name: SOCKETIO_PATH
+              value: /socket.io/
+            - name: VUE_APP_BASE_URL
+              value: /
+            - name: VUE_APP_DESCRIBO_URL
+              value: https://describo-sunet.drive.test.sunet.se/application
+            - name: VUE_APP_FRONTENDHOST
+              value: https://rds-sunet.drive.test.sunet.se
+            - name: VUE_APP_SOCKETIO_HOST
+              value: https://rds-sunet.drive.test.sunet.se
+          envFrom:
+            - configMapRef:
+                name: mservice
+            - configMapRef:
+                name: proxy
+            - configMapRef:
+                name: globalenvvar
+          image: zivgitlab.wwu.io/sciebo-rds/sciebo-rds/rds_web:v0.1.9
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /metrics
+              port: metrics
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: layer0-web
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+            - containerPort: 9999
+              name: metrics
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /metrics
+              port: metrics
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /srv/domains.json
+              name: domainsconfig
+              readOnly: true
+              subPath: domains.json
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+              - key: domains.json
+                path: domains.json
+            name: domainsconfig
+          name: domainsconfig

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: research-data-services.org
+    app.kubernetes.io/instance: customerrds
+    app.kubernetes.io/name: layer0-helper-describo-token-updater
+    app.kubernetes.io/part-of: service
+    app.kubernetes.io/version: '1.0'
+    research-data-services.org/layer: layer0
+  name: layer0-helper-describo-token-updater
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: research-data-services.org
+      app.kubernetes.io/instance: customerrds
+      app.kubernetes.io/name: layer0-helper-describo-token-updater
+      app.kubernetes.io/part-of: service
+      app.kubernetes.io/version: '1.0'
+      research-data-services.org/layer: layer0
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: research-data-services.org
+        app.kubernetes.io/instance: customerrds
+        app.kubernetes.io/name: layer0-helper-describo-token-updater
+        app.kubernetes.io/part-of: service
+        app.kubernetes.io/version: '1.0'
+        research-data-services.org/layer: layer0
+    spec:
+      containers:
+        - env:
+            - name: RDS_INSTALLATION_DOMAIN
+              value: rds-sunet.drive.test.sunet.se
+          envFrom:
+            - configMapRef:
+                name: mservice
+            - configMapRef:
+                name: proxy
+            - configMapRef:
+                name: globalenvvar
+            - configMapRef:
+                name: describohelperconfig
+          image: zivgitlab.wwu.io/sciebo-rds/sciebo-rds/port_helper_describo_token_updater:v0.1.9
+          imagePullPolicy: Always
+          name: layer0-helper-describo-token-updater
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

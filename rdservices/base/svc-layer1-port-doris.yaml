@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: layer1-port-doris
+  name: layer1-port-doris
+spec:
+  clusterIP: 10.152.183.53
+  clusterIPs:
+    - 10.152.183.53
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: layer1-port-doris
+  sessionAffinity: None
+  type: ClusterIP

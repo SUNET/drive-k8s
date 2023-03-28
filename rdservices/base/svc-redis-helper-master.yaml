@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: master
+    app.kubernetes.io/instance: customerrds
+    app.kubernetes.io/name: redis-helper
+  name: redis-helper-master
+spec:
+  clusterIP: 10.152.183.18
+  clusterIPs:
+    - 10.152.183.18
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: tcp-redis
+      port: 6379
+      protocol: TCP
+      targetPort: redis
+  selector:
+    app.kubernetes.io/component: master
+    app.kubernetes.io/instance: customerrds
+    app.kubernetes.io/name: redis-helper
+  sessionAffinity: None
+  type: ClusterIP

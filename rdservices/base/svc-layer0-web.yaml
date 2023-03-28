@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: research-data-services.org
+    app.kubernetes.io/instance: customerrds
+    app.kubernetes.io/name: layer0-web
+    app.kubernetes.io/part-of: rds-ingress
+    app.kubernetes.io/version: '1.0'
+    research-data-services.org/layer: layer0
+  name: layer0-web
+spec:
+  clusterIP: 10.152.183.88
+  clusterIPs:
+    - 10.152.183.88
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - name: metrics
+      port: 9999
+      protocol: TCP
+      targetPort: metrics
+  selector:
+    app.kubernetes.io/instance: customerrds
+    app.kubernetes.io/name: layer0-web
+  sessionAffinity: None
+  type: ClusterIP

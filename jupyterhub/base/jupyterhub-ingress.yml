@@ -1,0 +1,32 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jupyterhub-ingress
+  namespace: jupyterhub
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  defaultBackend:
+    service:
+      name: proxy-public
+      port:
+        number: 8443
+  tls:
+    - hosts:
+        - jupyter.drive.test.sunet.se 
+      secretName: tls-secret
+  
+  rules:
+  - host: jupyter.drive.test.sunet.se
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend: 
+          service:
+            name: proxy-public
+            port:
+              number: 80

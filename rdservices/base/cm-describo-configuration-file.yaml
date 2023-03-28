@@ -1,0 +1,141 @@
+apiVersion: v1
+data:
+  configuration.json: "{\n  \"ui\": {\n      \"siteName\": \"Sciebo - Describo Online\"\
+    ,\n      \"logo\": \"http://www.researchobject.org/ro-crate/assets/img/ro-crate.svg\"\
+    ,\n      \"login\": \"\",\n      \"services\": {\n          \"owncloud\": false,\n\
+    \          \"reva\": false,\n          \"s3\": false,\n          \"onedrive\"\
+    : false\n      },\n      \"basePath\": \"/\",\n      \"maxSessionLifetime\": \"\
+    86400\",\n      \"maxEntitiesPerTemplate\": \"100\"\n  },\n  \"api\": {\n    \"\
+    port\": 8080,\n    \"periodicProcessInterval\": 300,\n    \"applications\": [\n\
+    \      {\n          \"name\": \"Owncloud ScieboRDS\",\n          \"secret\": \"\
+    IAMSECRET\"\n      }\n    ]\n  }\n}"
+  nginx.conf: "upstream api_socket_nodes {\n    ip_hash;\n    server 127.0.0.1:8080;\n\
+    }\n\nserver {\n    listen       80;\n    listen  [::]:80;\n    server_name  127.0.0.1;\n\
+    \n    proxy_buffering off;\n    \n    #charset koi8-r;\n    #access_log  /var/log/nginx/host.access.log\
+    \  main;\n\n    location / {\n        root   /usr/share/nginx/html;\n        try_files\
+    \ $uri $uri/ /index.html;\n    }\n\n   location ~ ^/api/(.*) {\n        #resolver\
+    \ 127.0.0.11 valid=30s;\n        set $api 127.0.0.1;\n        add_header 'Cache-Control'\
+    \ 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';\n      \
+    \  proxy_set_header X-Forwarded-For $remote_addr;\n        proxy_set_header X-Real-IP\
+    \  $remote_addr;\n        proxy_set_header Host $host;\n        #proxy_set_header\
+    \ Authorization $http_authorization;\n        # auth_request_set $token $upstream_http_x_auth_request_access_token;\n\
+    \        # add_header 'Authorization' $token;\n        proxy_redirect off;\n \
+    \       proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n\
+    \        proxy_set_header Connection \"upgrade\";\n        proxy_send_timeout\
+    \ 120;\n        proxy_read_timeout 120;\n        send_timeout 120;\n        proxy_pass\
+    \   http://$api:8080/$1$is_args$args;\n    }\n\n    location /socket.io/ {\n \
+    \       proxy_http_version 1.1;\n        proxy_redirect off;\n        proxy_set_header\
+    \ Upgrade $http_upgrade;\n        proxy_set_header Connection \"upgrade\";\n \
+    \       proxy_set_header        Host                    $host;\n        proxy_set_header\
+    \        X-Real-IP               $remote_addr;\n        proxy_set_header     \
+    \   X-Forwarded-For         $proxy_add_x_forwarded_for;\n        proxy_pass http://api_socket_nodes/socket.io/;\n\
+    \    }\n    #error_page  404              /404.html;\n\n    # redirect server\
+    \ error pages to the static page /50x.html\n    #\n    error_page   500 502 503\
+    \ 504  /50x.html;\n    location = /50x.html {\n        root   /usr/share/nginx/html;\n\
+    \    }\n\n    # proxy the PHP scripts to Apache listening on 127.0.0.1:80\n  \
+    \  #\n    #location ~ \\.php$ {\n    #    proxy_pass   http://127.0.0.1;\n   \
+    \ #}\n\n    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000\n\
+    \    #\n    #location ~ \\.php$ {\n    #    root           html;\n    #    fastcgi_pass\
+    \   127.0.0.1:9000;\n    #    fastcgi_index  index.php;\n    #    fastcgi_param\
+    \  SCRIPT_FILENAME  /scripts$fastcgi_script_name;\n    #    include        fastcgi_params;\n\
+    \    #}\n\n    # deny access to .htaccess files, if Apache's document root\n \
+    \   # concurs with nginx's one\n    #\n    #location ~ /\\.ht {\n    #    deny\
+    \  all;\n    #}\n}"
+  type-definitions-lookup.json: "[\n    { \"name\": \"Person\", \"help\": \"A person\
+    \ (alive, dead, undead, or fictional).\" },\n    { \"name\": \"Thing\", \"help\"\
+    : \"The most generic type of item.\" },\n    {\n        \"name\": \"Organization\"\
+    ,\n        \"help\": \"An organization such as a school, NGO, corporation, club,\
+    \ etc.\"\n    },\n    {\n        \"name\": \"CreativeWork\",\n        \"help\"\
+    : \"The most generic kind of creative work, including books, movies, photographs,\
+    \ software programs, etc.\"\n    },\n    {\n        \"name\": \"Dataset\",\n \
+    \       \"help\": \"A body of structured information describing some topic(s)\
+    \ of interest.\"\n    }\n]"
+  type-definitions.json: "{\n    \"Person\": {\n        \"id\": \"http://schema.org/Person\"\
+    ,\n        \"name\": \"Person\",\n        \"help\": \"A person (alive, dead, undead,\
+    \ or fictional).\",\n        \"subClassOf\": [\n            \"Thing\"\n      \
+    \  ],\n        \"allowAdditionalProperties\": false,\n        \"inputs\": [\n\
+    \            {\n                \"id\": \"http://schema.org/address\",\n     \
+    \           \"name\": \"address\",\n                \"help\": \"Physical address\
+    \ of the item.\",\n                \"multiple\": false,\n                \"type\"\
+    : [\n                    \"Text\"\n                ]\n            },\n       \
+    \     {\n                \"id\": \"http://schema.org/affiliation\",\n        \
+    \        \"name\": \"affiliation\",\n                \"help\": \"An organization\
+    \ that this person is affiliated with. For example, a school/university, a club,\
+    \ or a team.\",\n                \"multiple\": false,\n                \"type\"\
+    : [\n                    \"Organization\"\n                ]\n            },\n\
+    \            {\n                \"id\": \"http://schema.org/email\",\n       \
+    \         \"name\": \"email\",\n                \"help\": \"Email address.\",\n\
+    \                \"multiple\": false,\n                \"type\": [\n         \
+    \           \"Text\"\n                ]\n            },\n            {\n     \
+    \           \"id\": \"http://schema.org/familyName\",\n                \"name\"\
+    : \"familyName\",\n                \"help\": \"Family name. In the U.S., the last\
+    \ name of a Person.\",\n                \"multiple\": false,\n               \
+    \ \"type\": [\n                    \"Text\"\n                ]\n            },\n\
+    \            {\n                \"id\": \"http://schema.org/givenName\",\n   \
+    \             \"name\": \"givenName\",\n                \"help\": \"Given name.\
+    \ In the U.S., the first name of a Person.\",\n                \"multiple\": false,\n\
+    \                \"type\": [\n                    \"Text\"\n                ]\n\
+    \            }\n        ],\n        \"linksTo\": [\n            \"Organization\"\
+    \n        ],\n        \"hierarchy\": [\n            \"Person\",\n            \"\
+    Thing\"\n        ]\n    },\n    \"Thing\": {\n        \"id\": \"http://schema.org/Thing\"\
+    ,\n        \"name\": \"Thing\",\n        \"help\": \"The most generic type of\
+    \ item.\",\n        \"subClassOf\": [],\n        \"allowAdditionalProperties\"\
+    : false,\n        \"inputs\": [\n            {\n                \"id\": \"http://schema.org/description\"\
+    ,\n                \"name\": \"description\",\n                \"help\": \"A description\
+    \ of the item.\",\n                \"multiple\": false,\n                \"type\"\
+    : [\n                    \"Text\"\n                ]\n            },\n       \
+    \     {\n                \"id\": \"http://schema.org/name\",\n               \
+    \ \"name\": \"name\",\n                \"help\": \"The name of the item.\",\n\
+    \                \"multiple\": false,\n                \"type\": [\n         \
+    \           \"Text\"\n                ]\n            }\n        ],\n        \"\
+    linksTo\": [\n            \"CreativeWork\",\n            \"Organization\",\n \
+    \           \"Person\"\n        ],\n        \"hierarchy\": [\n            \"Thing\"\
+    \n        ]\n    },\n    \"Organization\": {\n        \"id\": \"http://schema.org/Organization\"\
+    ,\n        \"name\": \"Organization\",\n        \"help\": \"An organization such\
+    \ as a school, NGO, corporation, club, etc.\",\n        \"subClassOf\": [\n  \
+    \          \"Thing\"\n        ],\n        \"allowAdditionalProperties\": false,\n\
+    \        \"inputs\": [\n            {\n                \"id\": \"http://schema.org/address\"\
+    ,\n                \"name\": \"address\",\n                \"help\": \"Physical\
+    \ address of the item.\",\n                \"multiple\": false,\n            \
+    \    \"type\": [\n                    \"Text\"\n                ]\n          \
+    \  }\n        ],\n        \"linksTo\": [],\n        \"hierarchy\": [\n       \
+    \     \"Organization\",\n            \"Thing\"\n        ]\n    },\n    \"CreativeWork\"\
+    : {\n        \"id\": \"http://schema.org/CreativeWork\",\n        \"name\": \"\
+    CreativeWork\",\n        \"help\": \"The most generic kind of creative work, including\
+    \ books, movies, photographs, software programs, etc.\",\n        \"subClassOf\"\
+    : [\n            \"Thing\"\n        ],\n        \"allowAdditionalProperties\"\
+    : false,\n        \"inputs\": [\n            {\n                \"id\": \"http://schema.org/author\"\
+    ,\n                \"name\": \"creator\",\n                \"help\": \"The author\
+    \ of this content or rating. Please note that author is special in that HTML 5\
+    \ provides a special mechanism for indicating authorship via the rel tag. That\
+    \ is equivalent to this and may be used interchangeably. \",\n               \
+    \ \"multiple\": false,\n                \"type\": [\n                    \"Person\"\
+    ,\n                    \"Organization\"\n                ]\n            }\n  \
+    \      ],\n        \"linksTo\": [\n            \"Organization\",\n           \
+    \ \"Person\"\n        ],\n        \"hierarchy\": [\n            \"CreativeWork\"\
+    ,\n            \"Thing\"\n        ]\n    },\n    \"Dataset\": {\n        \"id\"\
+    : \"http://schema.org/Dataset\",\n        \"name\": \"Dataset\",\n        \"help\"\
+    : \"A body of structured information describing some topic(s) of interest.\",\n\
+    \        \"subClassOf\": [\n            \"CreativeWork\"\n        ],\n       \
+    \ \"allowAdditionalProperties\": false,\n        \"inputs\": [\n            {\n\
+    \                \"id\": \"http://schema.org/datePublished\",\n              \
+    \  \"name\": \"datePublished\",\n                \"help\": \"Date of first broadcast/publication.\"\
+    ,\n                \"multiple\": false,\n                \"type\": [\n       \
+    \             \"Date\"\n                ]\n            },\n            {\n   \
+    \             \"id\": \"http://schema.org/zenodocategory\",\n                \"\
+    name\": \"zenodocategory\",\n                \"help\": \"The Zenodo Category:\
+    \ [ 'publication/book', 'publication section', '...', 'dataset', 'image/plot',\
+    \ '...' ]\",\n                \"multiple\": false,\n                \"type\":\
+    \ [\n                    \"Text\"\n                ]\n            },\n       \
+    \     {\n                \"id\": \"http://schema.org/osfcategory\",\n        \
+    \        \"name\": \"osfcategory\",\n                \"help\": \"The OSF Category:\
+    \ [ 'analysis', 'communication', '...', 'procedure', 'instrumentation', '...'\
+    \ ]\",\n                \"multiple\": false,\n                \"type\": [\n  \
+    \                  \"Text\"\n                ]\n            }\n        ],\n  \
+    \      \"linksTo\": [\n            \"CreativeWork\"\n        ],\n        \"hierarchy\"\
+    : [\n            \"Dataset\",\n            \"CreativeWork\",\n            \"Thing\"\
+    \n        ]\n    }\n}"
+kind: ConfigMap
+metadata:
+  labels: {}
+  name: describo-configuration-file

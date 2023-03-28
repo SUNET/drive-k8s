@@ -1,0 +1,22 @@
+apiVersion: v1
+data:
+  DESCRIBO_API_ENDPOINT: http://layer0-describo/api/session/application
+  DESCRIBO_API_SECRET: IAMSECRET
+  EMBED_MODE: 'true'
+  FLASK_ORIGINS: '["http://localhost:8080","http://localhost:8085","http://localhost:8000","http://localhost:9100","https://rds-sunet.drive.test.sunet.se","http://rds-sunet.drive.test.sunet.se"]'
+  PROMETHEUS_MULTIPROC_DIR: /tmp
+  REDIS_HELPER_HOST: redis-helper
+  REDIS_HELPER_PORT: '6379'
+  REDIS_HOST: redis
+  REDIS_PORT: '6379'
+  SECRET_KEY: '1234'
+  SOCKETIO_HOST: https://rds-sunet.drive.test.sunet.se
+  SOCKETIO_PATH: /socket.io/
+  VUE_APP_BASE_URL: /
+  VUE_APP_DESCRIBO_URL: https://describo-sunet.drive.test.sunet.se/application
+  VUE_APP_FRONTENDHOST: https://rds-sunet.drive.test.sunet.se
+  VUE_APP_SOCKETIO_HOST: https://rds-sunet.drive.test.sunet.se
+kind: ConfigMap
+metadata:
+  labels: {}
+  name: webconfig

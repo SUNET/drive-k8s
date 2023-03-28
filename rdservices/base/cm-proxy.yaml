@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  HTTPS_PROXY: ''
+  HTTP_PROXY: ''
+  NO_PROXY: '*'
+  http_proxy: ''
+  https_proxy: ''
+  no_proxy: '*'
+kind: ConfigMap
+metadata:
+  labels: {}
+  name: proxy

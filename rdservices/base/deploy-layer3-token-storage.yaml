@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: research-data-services.org
+    app.kubernetes.io/instance: customerrds
+    app.kubernetes.io/name: layer3-token-storage
+    app.kubernetes.io/part-of: core
+    app.kubernetes.io/version: '1.0'
+    research-data-services.org/layer: layer3
+  name: layer3-token-storage
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: research-data-services.org
+      app.kubernetes.io/instance: customerrds
+      app.kubernetes.io/name: layer3-token-storage
+      app.kubernetes.io/part-of: core
+      app.kubernetes.io/version: '1.0'
+      research-data-services.org/layer: layer3
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: research-data-services.org
+        app.kubernetes.io/instance: customerrds
+        app.kubernetes.io/name: layer3-token-storage
+        app.kubernetes.io/part-of: core
+        app.kubernetes.io/version: '1.0'
+        research-data-services.org/layer: layer3
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: proxy
+            - configMapRef:
+                name: globalenvvar
+            - configMapRef:
+                name: layer3tokenconfig
+          image: zivgitlab.wwu.io/sciebo-rds/sciebo-rds/central_service_token_storage:v0.1.9
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /metrics
+              port: http
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: layer3-token-storage
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /metrics
+              port: http
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      initContainers:
+        - args:
+            - -c
+            - while [ "$(redis-cli -h $REDIS_PORT_6379_TCP_ADDR ping)" != "PONG" ];
+              do sleep 2; done
+          command:
+            - sh
+          image: redis
+          imagePullPolicy: Always
+          name: deploy
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

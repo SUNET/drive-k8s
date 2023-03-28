@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+- ../../base
+patchesStrategicMerge:
+  - cm-domainsconfig.yaml
+  - cm-globalenvvar.yaml
+  - cm-portowncloudconfig.yaml
+  - cm-webconfig.yaml
+  - deploy-layer0-helper-describo-token-updater.yaml
+  - ing-layer0-describo.yaml
+  - ing-layer0-web.yaml
+  - svc-drive.yaml

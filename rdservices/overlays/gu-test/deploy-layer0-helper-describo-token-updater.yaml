@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: research-data-services.org
+    app.kubernetes.io/instance: customerrds
+    app.kubernetes.io/name: layer0-helper-describo-token-updater
+    app.kubernetes.io/part-of: service
+    app.kubernetes.io/version: '1.0'
+    research-data-services.org/layer: layer0
+  name: layer0-helper-describo-token-updater
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: research-data-services.org
+        app.kubernetes.io/instance: customerrds
+        app.kubernetes.io/name: layer0-helper-describo-token-updater
+        app.kubernetes.io/part-of: service
+        app.kubernetes.io/version: '1.0'
+        research-data-services.org/layer: layer0
+    spec:
+      containers:
+        - env:
+            - name: RDS_INSTALLATION_DOMAIN
+              value: rds-gu.drive.test.sunet.se
+          envFrom:
+            - configMapRef:
+                name: mservice
+            - configMapRef:
+                name: proxy
+            - configMapRef:
+                name: globalenvvar
+            - configMapRef:
+                name: describohelperconfig

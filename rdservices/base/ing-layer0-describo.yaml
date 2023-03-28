@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app.kubernetes.io/component: research-data-services.org
+    app.kubernetes.io/instance: customerrds
+    app.kubernetes.io/name: layer0-describo
+    app.kubernetes.io/part-of: service
+    app.kubernetes.io/version: '1.0'
+    research-data-services.org/layer: layer0
+  name: layer0-describo
+spec:
+  ingressClassName: public
+  rules:
+    - host: describo-sunet.drive.test.sunet.se
+      http:
+        paths:
+          - backend:
+              service:
+                name: layer0-describo
+                port:
+                  name: http
+            path: /
+            pathType: Prefix

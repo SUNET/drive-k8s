@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  LOGLEVEL: DEBUG
+  RDS_OAUTH_REDIRECT_URI: https://rds-sunet.drive.test.sunet.se
+  VERIFY_SSL: 'True'
+kind: ConfigMap
+metadata:
+  labels: {}
+  name: globalenvvar
