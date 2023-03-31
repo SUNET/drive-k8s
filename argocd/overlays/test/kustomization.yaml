@@ -6,4 +6,3 @@ patchesStrategicMerge:
 - argocd-server-deployment.yaml
 - argocd-repo-server-deployment.yaml
 - argocd-cm.yaml
-- argocd-ingress.yaml
