@@ -20,3 +20,8 @@ spec:
         - --insecure
         - --redis
         - "argocd-redis-ha-haproxy:6379"
+      - name: argocd-repo-server
+        env:
+        - name: ARGOCD_EXEC_TIMEOUT
+          value: "300s"
+
